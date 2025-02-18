@@ -1,10 +1,20 @@
 from fastapi import APIRouter
-
+import schemas.contact as contact_schema
+from datetime import datetime
 router = APIRouter()
 
-@router.get("/contacts") # 一覧表示
+@router.get("/contacts", response_model=list[contact_schema.Contact]) # 一覧表示
 async def get_contact_all():
-    pass
+    dummy_date = datetime.now()
+    return [contact_schema.Contact(
+        id=1, 
+        name="山田", 
+        email="test@test.com", 
+        url="http://test.com", 
+        gender=1, message="テスト", 
+        is_enabled=False, 
+        created_at=dummy_date
+    )]
 
 @router.post("/contacts") # 保存
 async def create_contact():
