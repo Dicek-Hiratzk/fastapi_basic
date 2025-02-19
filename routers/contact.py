@@ -11,14 +11,15 @@ async def get_contact_all():
         name="山田", 
         email="test@test.com", 
         url="http://test.com", 
-        gender=1, message="テスト", 
+        gender=1, 
+        message="テスト", 
         is_enabled=False, 
         created_at=dummy_date
     )]
 
-@router.post("/contacts") # 保存
-async def create_contact():
-    pass
+@router.post("/contacts", response_model=contact_schema.Contact) # 保存
+async def create_contact(body: contact_schema.Contact):
+    return contact_schema.Contact(**body.model_dump())
 
 @router.get("/contacts/{id}") # 詳細表示
 async def get_contact():
